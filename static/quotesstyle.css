@@ -1,0 +1,155 @@
+/* quotesstyle.css */
+
+/* General Page Styles */
+body {
+    font-family: 'Georgia', serif; /* Elegant serif for body text */
+    background-color: #fdf6f0; /* Soft pastel background */
+    color: #444; /* Neutral readable text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all page content */
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #6b5b95; /* Muted purple */
+}
+
+nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #d8a7b1; /* Soft muted pink */
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #6b5b95;
+}
+
+/* Container for quotes */
+.quote-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    max-width: 900px;
+    padding: 2rem;
+    background-color: #fffaf4; /* Soft off-white pastel */
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Individual Quote */
+.quote {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    text-align: center;
+    color: #6b5b95; /* Muted purple */
+    margin: 1.5rem 0;
+    line-height: 1.6;
+}
+
+/* Author */
+.author {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #d8a7b1; /* Soft muted pink */
+    margin-bottom: 2rem;
+}
+
+/* Images (e.g., Maya Angelou portrait) */
+.quote-image,
+.portrait,
+.thumb {
+    width: 250px;  /* Larger consistent width */
+    height: 250px; /* Larger consistent height */
+    object-fit: cover; /* Keep images tidy */
+    border-radius: 50%; /* Circular portraits */
+    margin-bottom: 1.5rem;
+    border: 4px solid #f2d1c9; /* Muted pastel border */
+}
+
+/* Grid of images */
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+    margin-top: 2rem;
+}
+
+.thumb {
+    border-radius: 12px;
+    width: 200px;
+    height: 200px;
+}
+
+/* Hover effect for quotes */
+.quote:hover {
+    color: #f3a3f3; /* Pastel highlight */
+    transition: color 0.3s ease-in-out;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    .quote {
+        font-size: 1.3rem;
+    }
+    .quote-image,
+    .portrait {
+        width: 180px;
+        height: 180px;
+    }
+}
+/* Container for show_all page: two columns */
+.show-all-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    flex-wrap: wrap; /* allows responsive stacking */
+}
+
+/* Left column for quotes */
+.quotes-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Right column for images */
+.images-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Adjust the quotes in the list */
+.quotes-column .quote {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+    text-align: left; /* Optional: left-align quotes for readability */
+}
+
+/* Images grid inside the right column */
+.images-column .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+}
+

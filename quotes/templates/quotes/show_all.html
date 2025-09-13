@@ -1,0 +1,25 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="show-all-container">
+
+  <div class="quotes-column">
+    <h2>All Quotes</h2>
+    <ul>
+      {% for q in quotes %}
+        <li class="quote">{{ q }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="images-column">
+    <h2>All Images</h2>
+    <div class="images-grid">
+      {% for img in images %}
+        <img src="{{ img }}" alt="image {{ forloop.counter }}" class="thumb">
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'quotes/base.html' %}
+{% block content %}
+  <div class="quote-page">
+    <img src="{{ image }}" alt="Famous person" class="quote-image">
+    <blockquote>{{ quote }}</blockquote>
+    <p><a href="{% url 'quote' %}">Get another quote</a></p>
+  </div>
+{% endblock %}
