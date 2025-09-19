@@ -1,0 +1,41 @@
+{% extends "restaurant/base.html" %}
+{% block content %}
+<h2>Welcome to 月夜 Tsukiyo Ramen</h2>
+<p>Location: 123 Main Street, Boston, MA</p>
+<p>Hours:</p>
+<ul>
+    <li>Mon-Fri: 11am - 10pm</li>
+    <li>Sat-Sun: 12pm - 11pm</li>
+</ul>
+
+<!-- Add button to go to order page -->
+<div style="margin-top: 20px;">
+    <a href="{% url 'order' %}">
+        <button style="padding: 10px 20px; font-size: 1.2rem; background-color: #b33; color: #fff; border: none; border-radius: 6px;">
+            Place an Order
+        </button>
+    </a>
+</div>
+<br><br>
+
+<!-- Restaurant photos -->
+<img src="https://greedy-panda.com/wp-content/uploads/2022/04/Depositphotos_251006236_xl-2015-1600x1067.jpg.webp"
+     alt="Ramen Shop"
+     width="400">
+
+<img src="https://www.justonecookbook.com/wp-content/uploads/2023/04/Spicy-Shoyu-Ramen-8055-I.jpg"
+     alt="Ramen Shop"
+     width="400">
+
+<img src="https://images.squarespace-cdn.com/content/v1/65b3d011900d3d4d8e22b62d/64f8970e-492e-4888-b509-6b9a470a8e62/201412santouka009.jpg?format=2500w"
+     alt="Ramen Bowl"
+     width="400">
+
+<img src="https://digitalpress.fra1.cdn.digitaloceanspaces.com/q3w1zql/2023/08/Spicy-Tonkotsu-Ramen-Dish.webp"
+     alt="Japanese Ramen"
+     width="400">
+
+
+
+
+{% endblock %}
