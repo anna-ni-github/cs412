@@ -1,0 +1,41 @@
+<!-- 
+Author: Anna Ni
+Email: annani@bu.edu
+Course: CS412 - Django Project
+File: show_profile.html
+Description: Template for displaying a single user profile in Mini Insta.
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+  <div style="display:flex; gap:2rem; align-items:flex-start;">
+    <div>
+      {% if profile.profile_image_url %}
+        <img src="{{ profile.profile_image_url }}" alt="{{ profile.username }}" 
+             style="width:240px;height:240px;object-fit:cover;border-radius:12px;">
+      {% else %}
+        <div style="width:240px;height:240px;border-radius:12px;background:#ddd;
+                    display:flex;align-items:center;justify-content:center;">
+          No image
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <h2>{{ profile.display_name }}</h2>
+      <p style="margin:0;color:#666">@{{ profile.username }}</p>
+      <p style="margin-top:1rem;">{{ profile.bio_text }}</p>
+      <p style="color:#888;font-size:0.9rem;margin-top:1rem;">
+        Joined: {{ profile.join_date }}
+      </p>
+
+      <!-- placeholders for Task 3/4 -->
+      <div style="margin-top:1.5rem; padding:0.8rem; border:1px dashed #eee; color:#777;">
+        <p><strong>Followers:</strong> (coming soon)</p>
+        <p><strong>Following:</strong> (coming soon)</p>
+        <p><strong>Posts:</strong> (coming soon)</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

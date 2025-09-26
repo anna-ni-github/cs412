@@ -1,0 +1,35 @@
+<!-- 
+Author: Anna Ni
+Email: annani@bu.edu
+Course: CS412 - Django Project
+File: show_all_profiles.html
+Description: Template for displaying all profiles in Mini Insta.
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h2 style="text-align:center; margin-bottom:0.2rem; font-size:1.7rem;">All Profiles</h2>
+
+
+  <!-- Grid container for profile cards -->
+  <div class="profile-grid">
+    {% for profile in object_list %}
+      <div class="profile-card">
+        <a href="{% url 'mini_insta:show_profile' profile.pk %}" style="text-decoration:none; color:inherit;">
+          {% if profile.profile_image_url %}
+            <img src="{{ profile.profile_image_url }}" alt="{{ profile.user.username }}">
+          {% else %}
+            <div class="no-image">No image</div>
+          {% endif %}
+          <!-- Profile name under picture -->
+          <h3 class="profile-name">{{ profile.display_name }}</h3>
+          <!-- Optional bio snippet -->
+          <p class="profile-bio">{{ profile.bio|truncatechars:50 }}</p>
+        </a>
+      </div>
+    {% empty %}
+      <p>No profiles found.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

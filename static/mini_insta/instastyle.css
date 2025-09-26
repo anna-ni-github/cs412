@@ -1,0 +1,102 @@
+body {
+  margin: 0 auto; 
+  height: 100%;  
+  background-color: #c6d2ee;
+  color: white;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 3rem;          /* bigger font */
+  font-weight: 800;           /* bold */
+  margin: 0.5rem 0;
+  letter-spacing: -1px;
+}
+
+.app-title a {
+  text-decoration: none;
+  background: linear-gradient(90deg, rgb(255, 247, 251), #88e5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} 
+
+/* A page wrapper for the entire page */
+.page-wrapper {
+   max-width: 900px; /* Sets a maximum width */
+   width: 100%;     /* Allows it to shrink on smaller screens */
+   margin: 0 auto;  /* Centers the wrapper horizontally */
+   padding: 20px;   /* Adds internal spacing around content */
+   background-color: black;
+   min-height: 100vh; /* Prevents bleeding */
+}
+
+/* Styling for the user when showing all profiles */
+.show_all_main {
+   padding: 20px;
+}
+
+.show_all_container {
+   display: flex;
+   text-align: center;
+   align-items: center;
+   gap: 10px; 
+   margin-bottom: 20px; /* space between each profile container */
+   border-style: groove;
+   border-width: 1px;
+   border-color: white;
+}
+
+.show_all_image {
+   width: 100px;
+   height: 100px;
+}
+
+.show_all_text {
+   text-align: center;
+   margin: 0;
+}
+
+/* Profile card container */
+.profile-card {
+  background: var(--white);      /* card background */
+  border-radius: 12px;           /* rounded corners */
+  padding: 1rem;
+  text-align: center;            /* center content */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle shadow */
+  transition: transform 0.2s;
+  margin-bottom: .5rem;           /* spacing between cards */
+}
+
+/* Profile image */
+.profile-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;        /* space between image and name */
+  border: 3px solid var(--pink);
+}
+
+/* Profile name under picture */
+.profile-card .profile-name {
+  margin: 0;                     /* remove default h3 margin */
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--dark-brown);
+}
+
+/* Optional: hover effect */
+.profile-card:hover {
+  transform: scale(1.03);
+}
+
+.profile-card .profile-name:hover {
+  color: var(--pink);
+}
