@@ -38,4 +38,33 @@ Description: Template for displaying a single user profile in Mini Insta.
       </div>
     </div>
   </div>
+
+  <!-- NEW: Posts section -->
+  <div style="margin-top:2rem;">
+    <h2>Posts</h2>
+    {% for post in profile.get_all_posts %}
+      <div style="border:1px solid #eee; padding:1rem; margin-bottom:1rem; border-radius:8px;">
+        <p style="margin:0 0 0.5rem 0;"><em>{{ post.timestamp }}</em></p>
+        <p>{{ post.caption }}</p>
+
+        {% with photos=post.get_all_photos %}
+          {% if photos %}
+            <img src="{{ photos.0.image_url }}" alt="Post photo" 
+                 style="width:300px; height:auto; border-radius:8px;">
+          {% else %}
+            <div style="width:300px; height:200px; background:#ddd; 
+                        display:flex; align-items:center; justify-content:center;
+                        border-radius:8px;">
+              No image available
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Link to PostDetailView -->
+        <p><a href="{% url 'mini_insta:show_post' post.pk %}">View Post Details →</a></p>
+      </div>
+    {% empty %}
+      <p>No posts yet.</p>
+    {% endfor %}
+  </div>
 {% endblock %}

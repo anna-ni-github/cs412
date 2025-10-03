@@ -1,0 +1,16 @@
+<h1>Post by {{ object.profile.username }}</h1>
+<p>{{ object.caption }}</p>
+<p><em>{{ object.timestamp }}</em></p>
+
+<h2>Photos:</h2>
+<div class="photos">
+  {% for photo in object.get_all_photos %}
+    <img src="{{ photo.image_url }}" alt="Post Photo" width="300">
+  {% empty %}
+    <p>No photos for this post.</p>
+  {% endfor %}
+</div>
+
+<!-- Link back to profile -->
+<p><a href="{% url 'mini_insta:show_profile' object.profile.pk %}">Back to Profile</a></p>
+
