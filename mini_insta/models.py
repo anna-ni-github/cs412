@@ -10,6 +10,7 @@ Description: Defines the Profile model for the Mini Insta application,
 
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 class Profile(models.Model):
    #Represents a user profile in the Mini Insta application.
@@ -40,8 +41,6 @@ class Post(models.Model):
     def get_all_photos(self):
         return Photo.objects.filter(post=self).order_by('timestamp')
     
-    def get_all_photos(self):
-        return Photo.objects.filter(post=self)
 
 
 class Photo(models.Model):
