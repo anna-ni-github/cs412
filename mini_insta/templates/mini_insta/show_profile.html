@@ -39,9 +39,18 @@ Description: Template for displaying a single user profile in Mini Insta.
     </div>
   </div>
 
-  <!-- NEW: Posts section -->
+  <!-- : Posts section -->
   <div style="margin-top:2rem;">
     <h2>Posts</h2>
+  
+  <!-- NEW: Edit Profile section -->
+    <p>
+      <a href="{% url 'mini_insta:update_profile' profile.pk %}" 
+         style="padding:0.5rem 1rem; background:#28a745; color:white; border-radius:6px; text-decoration:none;">
+        ✏️ Edit Profile
+      </a>
+    </p>
+    
 
     <!-- CREATE POST LINK -->
     <p>

@@ -1,16 +1,48 @@
-<h1>Post by {{ object.profile.username }}</h1>
+<!-- 
+Author: Anna Ni
+Email: annani@bu.edu
+Course: CS412 - Django Project
+File: show_post.html
+Description: Template for displaying a single user post in Mini Insta.
+-->
+<h1>Post by {{ post.profile.username }}</h1>
 <p>{{ object.caption }}</p>
 <p><em>{{ object.timestamp }}</em></p>
 
-<h2>Photos:</h2>
-<div class="photos">
-  {% for photo in object.get_all_photos %}
-    <img src="{{ photo.image_url }}" alt="Post Photo" width="300">
-  {% empty %}
-    <p>No photos for this post.</p>
-  {% endfor %}
-</div>
+<!--  Photos Section -->
+{% if object.photo_set.all %}
+  <h2>Photos:</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+    {% for photo in object.photo_set.all %}
+      <div style="flex: 1 1 200px; text-align:center;">
+        <img src="{{ photo.get_image_url }}" 
+             alt="Post Image {{ forloop.counter }}" 
+             width="300" 
+             style="border-radius:8px; max-width:100%; height:auto; border:1px solid #ddd;">
+      </div>
+    {% endfor %}
+  </div>
+{% elif object.image_url %}
+  <!--  Fallback for old posts that still use image_url -->
+  <h2>Photo:</h2>
+  <img src="{{ object.image_url }}" alt="Post Image" width="300" style="border-radius:8px;">
+{% else %}
+  <p><em>No image available</em></p>
+{% endif %}
+
+<!-- Edit and Delete Links -->
+<p>
+  <a href="{% url 'mini_insta:update_post' object.pk %}" 
+     style="padding:0.5rem 1rem; background:#ffc107; color:black; border-radius:6px; text-decoration:none;">
+    ✏️ Update
+  </a>
+
+  <a href="{% url 'mini_insta:delete_post' object.pk %}" 
+     style="padding:0.5rem 1rem; background:#dc3545; color:white; border-radius:6px; text-decoration:none;">
+    🗑 Delete Post
+  </a>
+</p>
+
 
 <!-- Link back to profile -->
 <p><a href="{% url 'mini_insta:show_profile' object.profile.pk %}">Back to Profile</a></p>
-

@@ -1,21 +1,47 @@
-
-
+<!-- 
+Author: Anna Ni
+Email: annani@bu.edu
+Course: CS412 - Django Project
+File: create_post_form.html
+Description: Template for creating a new post in Mini Insta.
+-->
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-  <h2>Create New Post for {{ profile.display_name }}</h2>
+  <div style="max-width: 600px; margin: 2rem auto;">
+    <h2 style="margin-bottom: 1.5rem;">Create New Post for {{ profile.display_name }}</h2>
 
-  <form method="POST" action="{% url 'mini_insta:create_post' profile.pk %}">
-    {% csrf_token %}
-    
-    {{ form.as_p }}
+    <!-- Django form -->
+    <form method="POST" action="{% url 'mini_insta:create_post' profile.pk %}" 
+          enctype="multipart/form-data"
+          style="display: flex; flex-direction: column; gap: 1rem;">
+      {% csrf_token %}
 
-    <p>
-      <label for="id_image_url">Image URL:</label>
-      {{ form.image_url }}
-    </p>
+      <!-- Caption field -->
+      <div>
+        {{ form.caption.label_tag }}
+        {{ form.caption }}
+      </div>
 
-    <button type="submit">Submit</button>
-    <a href="{% url 'mini_insta:show_profile' profile.pk %}">Cancel</a>
-  </form>
+      <!--  New File Upload Field -->
+      <div>
+        <label for="id_files">Upload Image(s):</label>
+        <input type="file" name="files" id="id_files" multiple>
+        <p style="color:#777; font-size:0.9rem;">You may select one or more images.</p>
+      </div>
+
+      <!-- Buttons -->
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <button type="submit" 
+                style="background-color:#007bff; color:white; border:none; padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">
+          Submit
+        </button>
+
+        <a href="{% url 'mini_insta:show_profile' profile.pk %}" 
+           style="color:#555; text-decoration:underline;">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
 {% endblock %}
