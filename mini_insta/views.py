@@ -10,8 +10,6 @@ from django.urls import reverse
 
 
 
-
-
 class ProfileListView(ListView):
     #Display a list of all Profile objects.
     model = Profile
@@ -88,9 +86,39 @@ class DeletePostView(DeleteView):
 
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ['caption', 'image_url']  # editable fields
-    template_name = 'mini_insta/update_post_form.html'  # template you'll create
+    fields = ['caption']  # Only caption can be updated
+    template_name = 'mini_insta/update_post_form.html'
 
     def get_success_url(self):
-        # After saving, go back to the updated post’s detail page
-        return reverse_lazy('mini_insta:show_post', kwargs={'pk': self.object.pk})
+        # After saving, go back to the updated post's detail page
+        return reverse('mini_insta:show_post', kwargs={'pk': self.object.pk})
+    
+class ShowFollowersDetailView(DetailView):
+    #Display all followers of a Profile.
+    model = Profile
+    template_name = 'mini_insta/show_followers.html'
+    context_object_name = 'profile'
+
+
+class ShowFollowingDetailView(DetailView):
+    #Display all profiles that this Profile is following.
+    model = Profile
+    template_name = 'mini_insta/show_following.html'
+    context_object_name = 'profile'
+    
+class PostFeedListView(ListView):
+    #Display the post feed for a given Profile.
+    model = Post
+    template_name = 'mini_insta/show_feed.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        #Get the posts for the feed of the profile specified by pk.
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_post_feed()
+    
+    def get_context_data(self, **kwargs):
+        #Add the profile to the context.
+        context = super().get_context_data(**kwargs)
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        return context

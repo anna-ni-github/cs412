@@ -1,0 +1,112 @@
+<!-- 
+File: show_feed.html
+Description: Template for displaying the post feed for a profile
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Feed for {{ profile.display_name }}</h2>
+    <a href="{% url 'mini_insta:show_profile' profile.pk %}" 
+       style="padding: 0.5rem 1rem; background: #007bff; color: white; 
+              text-decoration: none; border-radius: 6px;">
+      👤 My Profile
+    </a>
+  </div>
+
+  {% if posts %}
+    {% for post in posts %}
+      <div style="border: 1px solid #eee; padding: 1.5rem; margin-bottom: 2rem; 
+                  border-radius: 12px; background: white;">
+        
+        <!-- Post Header: Profile info -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          {% if post.profile.profile_image_url %}
+            <img src="{{ post.profile.profile_image_url }}" 
+                 alt="{{ post.profile.username }}"
+                 style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+          {% else %}
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: #ddd;
+                        display: flex; align-items: center; justify-content: center;">
+              👤
+            </div>
+          {% endif %}
+          
+          <div>
+            <a href="{% url 'mini_insta:show_profile' post.profile.pk %}" 
+               style="font-weight: bold; text-decoration: none; color: #000;">
+              {{ post.profile.display_name }}
+            </a>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">
+              @{{ post.profile.username }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Post Photo(s) -->
+        {% if post.photos.all %}
+          <div style="margin-bottom: 1rem;">
+            {% for photo in post.photos.all %}
+              <img src="{{ photo.get_image_url }}" 
+                   alt="Post photo"
+                   style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 0.5rem;">
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Like count -->
+        <p style="margin: 0.5rem 0;">
+          <strong>❤️ {{ post.get_num_likes }} Like{{ post.get_num_likes|pluralize }}</strong>
+        </p>
+
+        <!-- Caption -->
+        <p style="margin: 0.5rem 0;">
+          <strong>{{ post.profile.username }}</strong> {{ post.caption }}
+        </p>
+
+        <!-- Timestamp -->
+        <p style="margin: 0.5rem 0; color: #888; font-size: 0.9rem;">
+          {{ post.timestamp|date:"M d, Y g:i A" }}
+        </p>
+
+        <!-- Comments -->
+        {% with comments=post.get_all_comments %}
+          {% if comments %}
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+              <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                View all {{ comments.count }} comment{{ comments.count|pluralize }}
+              </p>
+              {% for comment in comments|slice:":2" %}
+                <p style="margin: 0.3rem 0; font-size: 0.95rem;">
+                  <strong>{{ comment.profile.username }}</strong> {{ comment.text }}
+                </p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Link to full post -->
+        <p style="margin-top: 1rem;">
+          <a href="{% url 'mini_insta:show_post' post.pk %}" 
+             style="color: #007bff; text-decoration: none; font-size: 0.9rem;">
+            View full post →
+          </a>
+        </p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div style="text-align: center; padding: 3rem; color: #888;">
+      <p style="font-size: 1.2rem; margin-bottom: 1rem;">📭 No posts in your feed</p>
+      <p>Follow some profiles to see their posts here!</p>
+      <p style="margin-top: 1rem;">
+        <a href="{% url 'mini_insta:show_all_profiles' %}" 
+           style="color: #007bff; text-decoration: none;">
+          Browse profiles →
+        </a>
+      </p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

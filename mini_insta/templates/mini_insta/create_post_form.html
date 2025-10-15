@@ -23,11 +23,18 @@ Description: Template for creating a new post in Mini Insta.
         {{ form.caption }}
       </div>
 
-      <!--  New File Upload Field -->
+      <!-- File Upload Field - Changed name from "image" to "files" -->
       <div>
         <label for="id_files">Upload Image(s):</label>
         <input type="file" name="files" id="id_files" multiple>
-        <p style="color:#777; font-size:0.9rem;">You may select one or more images.</p>
+        <p style="color:#777; font-size:0.9rem;">Select one or more images to upload.</p>
+      </div>
+
+      <!-- Optional: Image URL field -->
+      <div>
+        {{ form.image_url.label_tag }}
+        {{ form.image_url }}
+        <p style="color:#777; font-size:0.9rem;">Or paste an image URL instead.</p>
       </div>
 
       <!-- Buttons -->

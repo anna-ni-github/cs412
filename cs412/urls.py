@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),  
     path('quotes/', include('quotes.urls')),
     path('restaurant/', include('restaurant.urls')),  
-    path('mini_insta/', include('mini_insta.urls')), #NEW
+    path('mini_insta/', include('mini_insta.urls')),#NEW
 ]
 
 if settings.DEBUG:

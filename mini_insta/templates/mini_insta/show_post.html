@@ -6,14 +6,20 @@ File: show_post.html
 Description: Template for displaying a single user post in Mini Insta.
 -->
 <h1>Post by {{ post.profile.username }}</h1>
+
+<!-- Like count -->
+<p style="margin: 0.5rem 0;">
+  <strong>❤️ {{ object.get_num_likes }} Like{{ object.get_num_likes|pluralize }}</strong>
+</p>
+
 <p>{{ object.caption }}</p>
 <p><em>{{ object.timestamp }}</em></p>
 
-<!--  Photos Section -->
-{% if object.photo_set.all %}
+<!--  Photos Section - Changed from photo_set to photos -->
+{% if object.photos.all %}
   <h2>Photos:</h2>
   <div style="display:flex; flex-wrap:wrap; gap:1rem;">
-    {% for photo in object.photo_set.all %}
+    {% for photo in object.photos.all %}
       <div style="flex: 1 1 200px; text-align:center;">
         <img src="{{ photo.get_image_url }}" 
              alt="Post Image {{ forloop.counter }}" 
@@ -46,3 +52,31 @@ Description: Template for displaying a single user post in Mini Insta.
 
 <!-- Link back to profile -->
 <p><a href="{% url 'mini_insta:show_profile' object.profile.pk %}">Back to Profile</a></p>
+
+<!-- Comments Section -->
+<div style="margin-top: 2rem; border-top: 2px solid #eee; padding-top: 1rem;">
+  <h2>Comments</h2>
+  
+  {% with comments=object.get_all_comments %}
+    {% if comments %}
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        {% for comment in comments %}
+          <div style="border: 1px solid #eee; padding: 1rem; border-radius: 8px; background: #f9f9f9;">
+            <p style="margin: 0 0 0.5rem 0;">
+              <a href="{% url 'mini_insta:show_profile' comment.profile.pk %}" 
+                 style="font-weight: bold; color: #007bff; text-decoration: none;">
+                {{ comment.profile.username }}
+              </a>
+              <span style="color: #888; font-size: 0.9rem; margin-left: 0.5rem;">
+                {{ comment.timestamp|date:"M d, Y g:i A" }}
+              </span>
+            </p>
+            <p style="margin: 0;">{{ comment.text }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="color: #888;">No comments yet.</p>
+    {% endif %}
+  {% endwith %}
+</div>

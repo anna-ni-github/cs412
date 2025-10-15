@@ -30,18 +30,39 @@ Description: Template for displaying a single user profile in Mini Insta.
         Joined: {{ profile.join_date }}
       </p>
 
-      <!-- placeholders for Task 3/4 -->
-      <div style="margin-top:1.5rem; padding:0.8rem; border:1px dashed #eee; color:#777;">
-        <p><strong>Followers:</strong> (coming soon)</p>
-        <p><strong>Following:</strong> (coming soon)</p>
-        <p><strong>Posts:</strong> (coming soon)</p>
+
+      <!-- Followers, Following, Posts stats -->
+      <div style="margin-top:1.5rem; padding:0.8rem; border:1px solid #eee; border-radius:6px;">
+        <p style="margin:0.5rem 0;">
+          <strong>Followers:</strong> 
+          <a href="{% url 'mini_insta:show_followers' profile.pk %}" 
+             style="color:#007bff; text-decoration:none;">
+            {{ profile.get_num_followers }}
+          </a>
+        </p>
+        <p style="margin:0.5rem 0;">
+          <strong>Following:</strong> 
+          <a href="{% url 'mini_insta:show_following' profile.pk %}" 
+             style="color:#007bff; text-decoration:none;">
+            {{ profile.get_num_following }}
+          </a>
+        </p>
+        <p style="margin:0.5rem 0;">
+          <strong>Posts:</strong> {{ profile.get_all_posts.count }}
+        </p>
       </div>
     </div>
   </div>
 
   <!-- : Posts section -->
   <div style="margin-top:2rem;">
-    <h2>Posts</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2>Posts</h2>
+      <a href="{% url 'mini_insta:show_feed' profile.pk %}" 
+         style="padding:0.5rem 1rem; background:#17a2b8; color:white; text-decoration:none; border-radius:6px;">
+        🏠 View Feed
+      </a>
+    </div>
   
   <!-- NEW: Edit Profile section -->
     <p>
@@ -64,19 +85,26 @@ Description: Template for displaying a single user profile in Mini Insta.
       <div style="border:1px solid #eee; padding:1rem; margin-bottom:1rem; border-radius:8px;">
         <p style="margin:0 0 0.5rem 0;"><em>{{ post.timestamp }}</em></p>
         <p>{{ post.caption }}</p>
-
-        {% with photos=post.get_all_photos %}
-          {% if photos %}
-            <img src="{{ photos.0.image_url }}" alt="Post photo" 
-                 style="width:300px; height:auto; border-radius:8px;">
-          {% else %}
-            <div style="width:300px; height:200px; background:#ddd; 
-                        display:flex; align-items:center; justify-content:center;
-                        border-radius:8px;">
-              No image available
-            </div>
-          {% endif %}
-        {% endwith %}
+        
+        <!-- Fixed: Use post.photos.all and get_image_url() method -->
+        {% if post.photos.all %}
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            {% for photo in post.photos.all %}
+              <img src="{{ photo.get_image_url }}" alt="Post photo" 
+                   style="width:300px; height:auto; border-radius:8px;">
+            {% endfor %}
+          </div>
+        {% elif post.image_url %}
+          <!-- Fallback for old posts with image_url on Post model -->
+          <img src="{{ post.image_url }}" alt="Post photo" 
+               style="width:300px; height:auto; border-radius:8px;">
+        {% else %}
+          <div style="width:300px; height:200px; background:#ddd; 
+                      display:flex; align-items:center; justify-content:center;
+                      border-radius:8px;">
+            No image available
+          </div>
+        {% endif %}
 
         <!-- Link to PostDetailView -->
         <p><a href="{% url 'mini_insta:show_post' post.pk %}">View Post Details →</a></p>

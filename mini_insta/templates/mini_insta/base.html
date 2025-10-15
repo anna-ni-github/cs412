@@ -20,8 +20,14 @@ Description: Base template for Mini Insta application.
       <a href="{% url 'mini_insta:show_all_profiles' %}">Mini Insta ★</a>
     </h1>
     
-    <nav>
-      <a href="{% url 'mini_insta:show_all_profiles' %}">All Profiles ↓↓↓</a>
+    <nav style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+      <a href="{% url 'mini_insta:show_all_profiles' %}">🔍 All Profiles</a>
+      
+      {% if profile %}
+        <!-- If we have a profile in context, show personalized links -->
+        <a href="{% url 'mini_insta:show_feed' profile.pk %}">🏠 Feed</a>
+        <a href="{% url 'mini_insta:show_profile' profile.pk %}">👤 Profile</a>
+      {% endif %}
     </nav>
   </header>
 
@@ -29,7 +35,7 @@ Description: Base template for Mini Insta application.
     {% block content %}{% endblock %}
   </main>
 
-  <footer style="padding:1rem; border-top:1px solid #ddd; margin-top:2rem;">
+  <footer style="padding:1rem; border-top:1px solid #ddd; margin-top:2rem; text-align: center;">
     <a href="{% url 'mini_insta:show_all_profiles' %}">Back to profiles ↑↑↑</a>
   </footer>
 </body>
