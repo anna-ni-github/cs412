@@ -7,8 +7,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
-
-
+from django.shortcuts import render
+from django.db.models import Q
 
 class ProfileListView(ListView):
     #Display a list of all Profile objects.
@@ -121,4 +121,63 @@ class PostFeedListView(ListView):
         #Add the profile to the context.
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        return context
+    
+class SearchView(ListView):
+    """Search for Profiles and Posts based on a query string."""
+    template_name = 'mini_insta/search_results.html'
+    context_object_name = 'posts'
+    
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Handle the request. If no query is present, show the search form.
+        Otherwise, proceed with the ListView to show results.
+        """
+        # Check if 'query' is in the GET parameters
+        if 'query' not in self.request.GET or not self.request.GET.get('query'):
+            # No query yet - show the search form
+            profile = Profile.objects.get(pk=self.kwargs['pk'])
+            context = {'profile': profile}
+            return render(request, 'mini_insta/search.html', context)
+        
+        # Query exists - continue with ListView
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        """
+        Return Posts that match the search query.
+        A post matches if the query is in its caption.
+        """
+        query = self.request.GET.get('query', '')
+        
+        # Search for posts where the query appears in the caption
+        posts = Post.objects.filter(caption__icontains=query).order_by('-timestamp')
+        
+        return posts
+    
+    def get_context_data(self, **kwargs):
+        #Add additional context data for the template.
+       
+        context = super().get_context_data(**kwargs)
+        
+        # Get the profile for whom we're searching
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        context['profile'] = profile
+        
+        # Get the query string
+        query = self.request.GET.get('query', '')
+        context['query'] = query
+        
+        # Get posts matching the query (already in context as 'posts')
+        context['posts'] = self.get_queryset()
+        
+        # Get profiles matching the query
+        # Match if query is in username, display_name, or bio_text
+        profiles = Profile.objects.filter(
+            Q(username__icontains=query) |
+            Q(display_name__icontains=query) |
+            Q(bio_text__icontains=query)
+        )
+        context['profiles'] = profiles
+        
         return context

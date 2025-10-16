@@ -1,0 +1,50 @@
+<!-- 
+File: search.html
+Description: Template for the search form
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+  <h2>Search Mini Insta</h2>
+  
+  <p style="color: #666; margin-bottom: 2rem;">
+    Search for profiles and posts
+  </p>
+  
+  <!-- Search Form -->
+  <form method="GET" action="{% url 'mini_insta:search' profile.pk %}" 
+        style="display: flex; flex-direction: column; gap: 1rem;">
+    
+    <div>
+      <label for="query" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+        Search Query:
+      </label>
+      <input type="text" 
+             name="query" 
+             id="query" 
+             placeholder="Enter search term..."
+             required
+             style="width: 100%; padding: 0.8rem; font-size: 1rem; 
+                    border: 1px solid #ddd; border-radius: 8px;">
+    </div>
+    
+    <div>
+      <button type="submit" 
+              style="background-color: #007bff; color: white; border: none; 
+                     padding: 0.8rem 2rem; border-radius: 8px; font-size: 1rem; 
+                     cursor: pointer; font-weight: bold;">
+        🔍 Search
+      </button>
+    </div>
+  </form>
+  
+  <p style="margin-top: 2rem;">
+    <a href="{% url 'mini_insta:show_profile' profile.pk %}" 
+       style="color: #007bff; text-decoration: none;">
+      ← Back to Profile
+    </a>
+  </p>
+</div>
+{% endblock %}
