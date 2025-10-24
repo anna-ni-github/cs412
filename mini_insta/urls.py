@@ -7,13 +7,19 @@ from .views import (
     PostDetailView, 
     CreatePostView, 
     UpdateProfileView, 
+    CreateProfileView,
     DeletePostView, 
     PostUpdateView,
     ShowFollowersDetailView,
     ShowFollowingDetailView,
     PostFeedListView,
-    SearchView
+    SearchView,
+    FollowProfileView,      
+    UnfollowProfileView,    
+    LikePostView,          
+    UnlikePostView,         
 )
+from django.contrib.auth import views as auth_views
 
 
 app_name = 'mini_insta'
@@ -30,4 +36,17 @@ urlpatterns = [
     path('post/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'), 
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='update_post'),
     path('profile/<int:pk>/search', SearchView.as_view(), name='search'),
+    path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='mini_insta/logged_out.html'), name='logout'),
+    path('create_profile/', CreateProfileView.as_view(), name='create_profile'),
+    
+    path('profile/<int:pk>/follow', FollowProfileView.as_view(), name='follow'),
+    path('profile/<int:pk>/delete_follow', UnfollowProfileView.as_view(), name='unfollow'),
+    
+    path('post/<int:pk>/like', LikePostView.as_view(), name='like_post'),
+    path('post/<int:pk>/delete_like', UnlikePostView.as_view(), name='unlike_post'),
+    
+    path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='mini_insta/logged_out.html'), name='logout'),
+    
 ]

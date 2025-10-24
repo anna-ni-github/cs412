@@ -12,10 +12,12 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.views.generic import UpdateView
+from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
    #Represents a user profile in the Mini Insta application.
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     username = models.CharField(max_length=30, unique=True)
     display_name = models.CharField(max_length=100)
     profile_image_url = models.URLField(blank=True)

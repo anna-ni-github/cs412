@@ -20,7 +20,7 @@ Description: Base template for Mini Insta application.
       <a href="{% url 'mini_insta:show_all_profiles' %}">Mini Insta ★</a>
     </h1>
     
-    <nav style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+    <nav style="display: flex; gap: 1rem; margin-top: 0.5rem; align-items: center;">
       <a href="{% url 'mini_insta:show_all_profiles' %}">🔍 All Profiles</a>
       
       {% if profile %}
@@ -29,6 +29,20 @@ Description: Base template for Mini Insta application.
         <a href="{% url 'mini_insta:show_profile' profile.pk %}">👤 Profile</a>
         <a href="{% url 'mini_insta:search' profile.pk %}">🔎 Search</a>
       {% endif %}
+      
+      <!-- Login status on the right side -->
+      <div style="margin-left: auto; padding: 0.5rem; background: #f0f0f0; border-radius: 4px;">
+        {% if request.user.is_authenticated %}
+          Logged in user: {{ request.user.username }}
+          <form method="post" action="{% url 'mini_insta:logout' %}" style="display: inline; margin-left: 1rem;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; padding: 0; font: inherit;">Logout</button>
+          </form>
+        {% else %}
+          Not logged in
+          <a href="{% url 'mini_insta:login' %}" style="margin-left: 1rem;">Login</a>
+        {% endif %}
+      </div>
     </nav>
   </header>
 

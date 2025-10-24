@@ -1,7 +1,5 @@
 <!-- 
-Author: Anna Ni
-Email: annani@bu.edu
-Course: CS412 - Django Project
+Author: Anna Ni (annani@bu.edu)
 File: show_profile.html
 Description: Template for displaying a single user profile in Mini Insta.
 -->
@@ -30,6 +28,22 @@ Description: Template for displaying a single user profile in Mini Insta.
         Joined: {{ profile.join_date }}
       </p>
 
+      <!-- Follow/Unfollow Button (only show if user is authenticated and not viewing own profile) -->
+      {% if request.user.is_authenticated and user_profile %}
+        {% if request.user != profile.user %}
+          {% if user_profile in profile.get_followers %}
+            <a href="{% url 'mini_insta:unfollow' profile.pk %}" 
+               style="display:inline-block; margin-top:1rem; padding:0.5rem 1.5rem; background:#dc3545; color:white; text-decoration:none; border-radius:6px;">
+              Unfollow
+            </a>
+          {% else %}
+            <a href="{% url 'mini_insta:follow' profile.pk %}" 
+               style="display:inline-block; margin-top:1rem; padding:0.5rem 1.5rem; background:#007bff; color:white; text-decoration:none; border-radius:6px;">
+              Follow
+            </a>
+          {% endif %}
+        {% endif %}
+      {% endif %}
 
       <!-- Followers, Following, Posts stats -->
       <div style="margin-top:1.5rem; padding:0.8rem; border:1px solid #eee; border-radius:6px;">
@@ -58,28 +72,31 @@ Description: Template for displaying a single user profile in Mini Insta.
   <div style="margin-top:2rem;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
       <h2>Posts</h2>
-      <a href="{% url 'mini_insta:show_feed' profile.pk %}" 
-         style="padding:0.5rem 1rem; background:#17a2b8; color:white; text-decoration:none; border-radius:6px;">
-        🏠 View Feed
-      </a>
+      <!-- Only show Feed link if viewing own profile -->
+      {% if request.user.is_authenticated and request.user == profile.user %}
+        <a href="{% url 'mini_insta:show_feed' profile.pk %}" 
+           style="padding:0.5rem 1rem; background:#17a2b8; color:white; text-decoration:none; border-radius:6px;">
+          🏠 View Feed
+        </a>
+      {% endif %}
     </div>
   
-  <!-- NEW: Edit Profile section -->
-    <p>
-      <a href="{% url 'mini_insta:update_profile' profile.pk %}" 
-         style="padding:0.5rem 1rem; background:#28a745; color:white; border-radius:6px; text-decoration:none;">
-        ✏️ Edit Profile
-      </a>
-    </p>
-    
-
-    <!-- CREATE POST LINK -->
-    <p>
-      <a href="{% url 'mini_insta:create_post' profile.pk %}" 
-         style="padding:0.5rem 1rem; background:#007bff; color:white; text-decoration:none; border-radius:6px;">
-        + Create New Post
-      </a>
-    </p>
+    <!-- Edit Profile and Create Post - only show if viewing own profile -->
+    {% if request.user.is_authenticated and request.user == profile.user %}
+      <p>
+        <a href="{% url 'mini_insta:update_profile' profile.pk %}" 
+           style="padding:0.5rem 1rem; background:#28a745; color:white; border-radius:6px; text-decoration:none;">
+          ✏️ Edit Profile
+        </a>
+      </p>
+      
+      <p>
+        <a href="{% url 'mini_insta:create_post' profile.pk %}" 
+           style="padding:0.5rem 1rem; background:#007bff; color:white; text-decoration:none; border-radius:6px;">
+          + Create New Post
+        </a>
+      </p>
+    {% endif %}
 
     {% for post in profile.get_all_posts %}
       <div style="border:1px solid #eee; padding:1rem; margin-bottom:1rem; border-radius:8px;">

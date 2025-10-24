@@ -142,3 +142,6 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/annani/static/'
     MEDIA_URL = '/annani/media/'
+
+LOGIN_REDIRECT_URL = 'mini_insta:show_all_profiles'
+LOGOUT_REDIRECT_URL = 'mini_insta:show_all_profiles'

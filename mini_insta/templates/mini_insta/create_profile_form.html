@@ -1,0 +1,20 @@
+<!-- mini_insta/templates/mini_insta/create_profile_form.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>Create Profile</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <h2>Create User Account</h2>
+    {{ user_creation_form.as_p }}
+    
+    <h2>Profile Information</h2>
+    {{ form.as_p }}
+    
+    <button type="submit">Create Profile</button>
+</form>
+
+<p><a href="{% url 'mini_insta:show_all_profiles' %}">Cancel</a></p>
+{% endblock %}

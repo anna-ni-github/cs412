@@ -1,0 +1,15 @@
+<!-- mini_insta/templates/mini_insta/login.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<!-- This basic authentication form works.
+- need to set "next" to redirect to correct page.
+-->
+
+<h1>Login</h1>
+<form method="POST" action="{% url 'mini_insta:login' %}" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Login">
+</form>
+{% endblock %}

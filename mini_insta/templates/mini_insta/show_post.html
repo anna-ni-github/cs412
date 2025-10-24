@@ -1,16 +1,38 @@
 <!-- 
-Author: Anna Ni
-Email: annani@bu.edu
-Course: CS412 - Django Project
+Author: Anna Ni (annani@bu.edu)
 File: show_post.html
 Description: Template for displaying a single user post in Mini Insta.
 -->
+
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
 <h1>Post by {{ post.profile.username }}</h1>
 
-<!-- Like count -->
-<p style="margin: 0.5rem 0;">
-  <strong>❤️ {{ object.get_num_likes }} Like{{ object.get_num_likes|pluralize }}</strong>
-</p>
+<!-- Like count and Like/Unlike button -->
+<div style="margin: 1rem 0; display: flex; align-items: center; gap: 1rem;">
+  <p style="margin: 0;">
+    <strong>❤️ {{ object.get_num_likes }} Like{{ object.get_num_likes|pluralize }}</strong>
+  </p>
+  
+  <!-- Like/Unlike Button (only show if user is authenticated and not viewing own post) -->
+  {% if request.user.is_authenticated %}
+    {% if request.user != object.profile.user %}
+      {% if request.user.profile in object.get_all_likes %}
+        <a href="{% url 'mini_insta:unlike_post' object.pk %}" 
+           style="padding:0.4rem 1rem; background:#dc3545; color:white; text-decoration:none; border-radius:6px; font-size:0.9rem;">
+          💔 Unlike
+        </a>
+      {% else %}
+        <a href="{% url 'mini_insta:like_post' object.pk %}" 
+           style="padding:0.4rem 1rem; background:#e74c3c; color:white; text-decoration:none; border-radius:6px; font-size:0.9rem;">
+          ❤️ Like
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+</div>
 
 <p>{{ object.caption }}</p>
 <p><em>{{ object.timestamp }}</em></p>
@@ -36,19 +58,20 @@ Description: Template for displaying a single user post in Mini Insta.
   <p><em>No image available</em></p>
 {% endif %}
 
-<!-- Edit and Delete Links -->
-<p>
-  <a href="{% url 'mini_insta:update_post' object.pk %}" 
-     style="padding:0.5rem 1rem; background:#ffc107; color:black; border-radius:6px; text-decoration:none;">
-    ✏️ Update
-  </a>
+<!-- Edit and Delete Links (only show if viewing own post) -->
+{% if request.user.is_authenticated and request.user == object.profile.user %}
+  <p>
+    <a href="{% url 'mini_insta:update_post' object.pk %}" 
+       style="padding:0.5rem 1rem; background:#ffc107; color:black; border-radius:6px; text-decoration:none;">
+      ✏️ Update
+    </a>
 
-  <a href="{% url 'mini_insta:delete_post' object.pk %}" 
-     style="padding:0.5rem 1rem; background:#dc3545; color:white; border-radius:6px; text-decoration:none;">
-    🗑 Delete Post
-  </a>
-</p>
-
+    <a href="{% url 'mini_insta:delete_post' object.pk %}" 
+       style="padding:0.5rem 1rem; background:#dc3545; color:white; border-radius:6px; text-decoration:none;">
+      🗑 Delete Post
+    </a>
+  </p>
+{% endif %}
 
 <!-- Link back to profile -->
 <p><a href="{% url 'mini_insta:show_profile' object.profile.pk %}">Back to Profile</a></p>
@@ -80,3 +103,5 @@ Description: Template for displaying a single user post in Mini Insta.
     {% endif %}
   {% endwith %}
 </div>
+
+{% endblock %}
