@@ -1,0 +1,117 @@
+<style>
+    .filter-form {
+        background-color: #ecf0f1;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    .filter-form h3 {
+        margin-top: 0;
+    }
+    .filter-form table {
+        width: auto;
+        margin-top: 10px;
+    }
+    .filter-form td {
+        padding: 5px 10px;
+        border: none;
+    }
+    .filter-form input[type="submit"] {
+        background-color: #2c3e50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .filter-form input[type="submit"]:hover {
+        background-color: #34495e;
+    }
+    .filter-form select {
+        padding: 5px;
+        border: 1px solid #bdc3c7;
+        border-radius: 3px;
+    }
+</style>
+
+<div class="filter-form">
+    <h3>Filter Voters</h3>
+    <form method="get">
+        <table>
+            <tr>
+                <th>Party Affiliation:</th>
+                <td>
+                    <select name="party_affiliation">
+                        <option value="">-- All --</option>
+                        {% for party in party_affiliations %}
+                            <option value="{{ party }}" {% if request.GET.party_affiliation == party %}selected{% endif %}>
+                                {{ party }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Minimum Birth Year:</th>
+                <td>
+                    <select name="min_birth_year">
+                        <option value="">-- Any --</option>
+                        {% for year in birth_years %}
+                            <option value="{{ year }}" {% if request.GET.min_birth_year == year|stringformat:"s" %}selected{% endif %}>
+                                {{ year }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Maximum Birth Year:</th>
+                <td>
+                    <select name="max_birth_year">
+                        <option value="">-- Any --</option>
+                        {% for year in birth_years %}
+                            <option value="{{ year }}" {% if request.GET.max_birth_year == year|stringformat:"s" %}selected{% endif %}>
+                                {{ year }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Voter Score:</th>
+                <td>
+                    <select name="voter_score">
+                        <option value="">-- Any --</option>
+                        {% for score in voter_scores %}
+                            <option value="{{ score }}" {% if request.GET.voter_score == score|stringformat:"s" %}selected{% endif %}>
+                                {{ score }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Voted in Elections:</th>
+                <td>
+                    <label><input type="checkbox" name="v20state" {% if request.GET.v20state %}checked{% endif %}> 2020 State</label><br>
+                    <label><input type="checkbox" name="v21town" {% if request.GET.v21town %}checked{% endif %}> 2021 Town</label><br>
+                    <label><input type="checkbox" name="v21primary" {% if request.GET.v21primary %}checked{% endif %}> 2021 Primary</label><br>
+                    <label><input type="checkbox" name="v22general" {% if request.GET.v22general %}checked{% endif %}> 2022 General</label><br>
+                    <label><input type="checkbox" name="v23town" {% if request.GET.v23town %}checked{% endif %}> 2023 Town</label>
+                </td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Filter">
+                    <a href="{% url 'voters' %}" style="margin-left: 10px;">Clear Filters</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
