@@ -1,0 +1,25 @@
+# Database
+*.sqlite3
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.py[cod]
+
+# Media files
+media/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
