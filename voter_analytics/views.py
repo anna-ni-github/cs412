@@ -1,3 +1,7 @@
+#voter_analytics/views.py
+#author: Anna Ni (annani@bu.edu)
+# Views for displaying voter records and graphs
+
 from django.views.generic import ListView
 from .models import Voter
 import plotly
