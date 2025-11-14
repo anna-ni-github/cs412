@@ -1,0 +1,27 @@
+<!-- dadjokes/templates/dadjokes/picture_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dad Joke Picture #{{ picture.id }}</title>
+</head>
+<body>
+    <h1>Dad Joke Picture #{{ picture.id }}</h1>
+
+    {% if picture.image %}
+        <img src="{{ picture.image.url }}" alt="Dad Joke Image" style="max-width:500px;">
+    {% else %}
+        <p>[No image available]</p>
+    {% endif %}
+
+    {% if picture.caption %}
+        <p><strong>Caption:</strong> {{ picture.caption }}</p>
+    {% endif %}
+
+    <p><strong>Uploaded by:</strong> {{ picture.contributor }}</p>
+    <p><em>Uploaded on:</em> {{ picture.created_at }}</p>
+
+    <p><a href="{% url 'pictures' %}">Back to All Pictures</a></p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+</body>
+</html>

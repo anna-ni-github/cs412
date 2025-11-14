@@ -1,0 +1,23 @@
+<!-- dadjokes/templates/dadjokes/jokes.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Dad Jokes</title>
+</head>
+<body>
+    <h1>All Dad Jokes</h1>
+    <ul>
+        {% for joke in jokes %}
+            <li>
+                <a href="{% url 'joke_detail' joke.pk %}">{{ joke.text }}</a>
+                <br>
+                <small>Contributed by: {{ joke.contributor }} | {{ joke.created_at }}</small>
+            </li>
+        {% empty %}
+            <p>No jokes available yet!</p>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+</body>
+</html>

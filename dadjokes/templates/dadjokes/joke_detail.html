@@ -1,0 +1,17 @@
+<!-- dadjokes/templates/dadjokes/joke_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Joke #{{ joke.id }}</title>
+</head>
+<body>
+    <h1>Joke #{{ joke.id }}</h1>
+    <p>{{ joke.text }}</p>
+    <p><strong>Contributed by:</strong> {{ joke.contributor }}</p>
+    <p><em>Created at:</em> {{ joke.created_at }}</p>
+
+    <p><a href="{% url 'jokes' %}">Back to All Jokes</a></p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+</body>
+</html>
