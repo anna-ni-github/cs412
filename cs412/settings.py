@@ -136,3 +136,9 @@ if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
 
 LOGIN_REDIRECT_URL = 'mini_insta:show_all_profiles'
 LOGOUT_REDIRECT_URL = 'mini_insta:show_all_profiles'
+
+REST_FRAMEWORK = {
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 10
+}
+ 
