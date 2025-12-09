@@ -300,14 +300,14 @@
             {% if user.is_authenticated %}
                 <a href="{% url 'clothing_list' %}">Wardrobe</a>
                 <a href="{% url 'outfit_list' %}">Outfits</a>
-                <form method="post" action="/logout/" style="display: inline;">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" style="background: none; border: none; color: #8B7355; font: inherit; cursor: pointer; padding: 8px 0; font-weight: 500; font-size: 15px; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.3s ease; position: relative;">
                         Logout ({{ user.username }})
                     </button>
                 </form>
             {% else %}
-                <a href="/login/">Login</a>
+                <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'register' %}">Register</a>
             {% endif %}
         </nav>
