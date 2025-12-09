@@ -1,0 +1,25 @@
+{% extends 'project/base.html' %}
+
+{% block title %}My Wardrobe{% endblock %}
+
+{% block content %}
+<h1>My Wardrobe</h1>
+
+<div style="text-align: right; margin-bottom: 30px;">
+    <a href="{% url 'clothing_add' %}" class="btn" style="color: white; text-decoration: none;">+ Add New Item</a>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+    {% for item in clothing_items %}
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+        <h3><a href="{% url 'clothing_detail' item.pk %}">{{ item.name }}</a></h3>
+        <p><strong>Category:</strong> {{ item.get_category_display }}</p>
+        <p><strong>Color:</strong> {{ item.color }}</p>
+        <p><strong>Season:</strong> {{ item.get_season_display }}</p>
+    </div>
+    {% empty %}
+    <p>No clothing items yet. Add some in the admin panel!</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}Add{% endif %} Outfit{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Edit{% else %}Add New{% endif %} Outfit</h1>
+
+<form method="post" style="max-width: 600px; margin: 40px auto;">
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.name.label }}</label>
+        {{ form.name }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.occasion.label }}</label>
+        {{ form.occasion }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.outfit_url.label }}</label>
+        {{ form.outfit_url }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.notes.label }}</label>
+        {{ form.notes }}
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-top: 30px;">
+        <button type="submit">Save Outfit</button>
+        <a href="{% url 'outfit_list' %}" class="btn" style="background: #ccc; color: #333; text-decoration: none; display: inline-block;">Cancel</a>
+    </div>
+</form>
+
+<style>
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .form-input:focus {
+        outline: none;
+        border-color: #8B7355;
+    }
+</style>
+{% endblock %}

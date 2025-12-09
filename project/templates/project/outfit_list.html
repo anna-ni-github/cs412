@@ -1,0 +1,24 @@
+{% extends 'project/base.html' %}
+
+{% block title %}My Outfits{% endblock %}
+
+{% block content %}
+<h1>My Outfits</h1>
+
+<div style="text-align: right; margin-bottom: 30px;">
+    <a href="{% url 'outfit_add' %}" class="btn" style="color: white; text-decoration: none;">+ Add New Outfit</a>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+    {% for outfit in outfits %}
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <img src="{{ outfit.outfit_url }}" alt="{{ outfit.name }}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 5px;">
+        <h3><a href="{% url 'outfit_detail' outfit.pk %}">{{ outfit.name }}</a></h3>
+        <p><strong>Occasion:</strong> {{ outfit.occasion }}</p>
+        <p><strong>Created:</strong> {{ outfit.date_created }}</p>
+    </div>
+    {% empty %}
+    <p>No outfits yet. Add some in the admin panel!</p>
+    {% endfor %}
+</div>
+{% endblock %}

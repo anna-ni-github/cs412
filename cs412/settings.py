@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'mini_insta', 
     'voter_analytics', 
     'dadjokes',
-    'rest_framework', #NEW
+    'rest_framework', 
+    'project', #NEW
 ]
 
 MIDDLEWARE = [
@@ -134,8 +135,9 @@ if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/annani/static/'
     MEDIA_URL = '/annani/media/'
 
-LOGIN_REDIRECT_URL = 'mini_insta:show_all_profiles'
-LOGOUT_REDIRECT_URL = 'mini_insta:show_all_profiles'
+LOGIN_REDIRECT_URL = '/project/'
+LOGOUT_REDIRECT_URL = '/project/'
+LOGIN_URL = '/login/'
 
 REST_FRAMEWORK = {
   'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

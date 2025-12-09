@@ -1,0 +1,41 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Add Item to {{ outfit.name }}{% endblock %}
+
+{% block content %}
+<h1>Add Item to "{{ outfit.name }}"</h1>
+
+<form method="post" style="max-width: 600px; margin: 40px auto;">
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.clothing_item.label }}</label>
+        {{ form.clothing_item }}
+        <p style="margin-top: 10px; font-size: 14px; color: #888;">
+            Don't see the item you're looking for? 
+            <a href="{% url 'clothing_add' %}?next={% url 'outfititem_add' outfit.pk %}" style="color: #8B7355; font-weight: 500;">Create a new clothing item</a>
+        </p>
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-top: 30px;">
+        <button type="submit">Add to Outfit</button>
+        <a href="{% url 'outfit_detail' outfit.pk %}" class="btn" style="background: #ccc; color: #333; text-decoration: none; display: inline-block;">Cancel</a>
+    </div>
+</form>
+
+<style>
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    select:focus {
+        outline: none;
+        border-color: #8B7355;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ item.name }}</h1>
+
+<div style="display: flex; gap: 30px; margin-top: 20px;">
+    <div style="flex: 1;">
+        <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 100%; max-width: 400px; border-radius: 5px;">
+    </div>
+    
+    <div style="flex: 1;">
+        <p><strong>Category:</strong> {{ item.get_category_display }}</p>
+        <p><strong>Color:</strong> {{ item.color }}</p>
+        <p><strong>Season:</strong> {{ item.get_season_display }}</p>
+        {% if item.brand %}
+        <p><strong>Brand:</strong> {{ item.brand }}</p>
+        {% endif %}
+        <p><strong>Added:</strong> {{ item.date_added }}</p>
+        <p><strong>Owner:</strong> {{ item.user.username }}</p>
+    </div>
+</div>
+
+<div style="margin-top: 30px; display: flex; gap: 15px;">
+    <a href="{% url 'clothing_edit' item.pk %}" class="btn" style="color: white; text-decoration: none;">Edit Item</a>
+    <a href="{% url 'clothing_delete' item.pk %}" class="btn" style="background: #d9534f; color: white; text-decoration: none;">Delete Item</a>
+</div> 
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'clothing_list' %}" style="color: #333;">← Back to Wardrobe</a>
+</div>
+{% endblock %}

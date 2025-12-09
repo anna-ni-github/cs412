@@ -1,0 +1,62 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div style="max-width: 450px; margin: 80px auto;">
+    <h1 style="text-align: center; margin-bottom: 40px;">Create an Account</h1>
+    
+    <form method="post" style="background: #fafafa; padding: 40px; border-radius: 8px; border: 1px solid #e8e8e8;">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div style="background-color: #ffe6e6; border: 1px solid #d9534f; padding: 15px; border-radius: 4px; margin-bottom: 20px; color: #d9534f;">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div style="margin-bottom: 20px;">
+            <label for="id_username" style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">Username</label>
+            {{ form.username }}
+            <small style="color: #888; font-size: 12px; display: block; margin-top: 5px;">150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label for="id_password1" style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">Password</label>
+            {{ form.password1 }}
+            <small style="color: #888; font-size: 12px; display: block; margin-top: 5px;">Your password must contain at least 8 characters.</small>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <label for="id_password2" style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">Confirm Password</label>
+            {{ form.password2 }}
+        </div>
+        
+        <button type="submit" style="width: 100%;">Create Account</button>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <p style="color: #888; font-size: 14px;">Already have an account? <a href="{% url 'login' %}" style="color: #8B7355;">Login here</a></p>
+        </div>
+    </form>
+</div>
+
+<style>
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    input:focus {
+        outline: none;
+        border-color: #8B7355;
+    }
+</style>
+{% endblock %}

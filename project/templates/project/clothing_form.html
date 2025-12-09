@@ -1,0 +1,62 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}Add{% endif %} Clothing Item{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Edit{% else %}Add New{% endif %} Clothing Item</h1>
+
+<form method="post" style="max-width: 600px; margin: 40px auto;">
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.name.label }}</label>
+        {{ form.name }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.category.label }}</label>
+        {{ form.category }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.color.label }}</label>
+        {{ form.color }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.season.label }}</label>
+        {{ form.season }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.brand.label }}</label>
+        {{ form.brand }}
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #6B5745; font-weight: 500;">{{ form.image_url.label }}</label>
+        {{ form.image_url }}
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-top: 30px;">
+        <button type="submit">Save Item</button>
+        <a href="{% url 'clothing_list' %}" class="btn" style="background: #ccc; color: #333; text-decoration: none; display: inline-block;">Cancel</a>
+    </div>
+</form>
+
+<style>
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .form-input:focus {
+        outline: none;
+        border-color: #8B7355;
+    }
+</style>
+{% endblock %}

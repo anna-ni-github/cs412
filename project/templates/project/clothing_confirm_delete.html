@@ -1,0 +1,21 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Delete Clothing Item{% endblock %}
+
+{% block content %}
+<h1>Delete Clothing Item</h1>
+
+<div style="max-width: 600px; margin: 40px auto; text-align: center;">
+    <p style="font-size: 18px; margin-bottom: 30px; color: #666;">
+        Are you sure you want to delete <strong>{{ item.name }}</strong>?
+    </p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button type="submit" style="background: #d9534f;">Yes, Delete</button>
+            <a href="{% url 'clothing_detail' item.pk %}" class="btn" style="background: #ccc; color: #333; text-decoration: none;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

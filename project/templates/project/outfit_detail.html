@@ -1,0 +1,55 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{{ outfit.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ outfit.name }}</h1>
+
+<div style="margin-top: 20px;">
+    <img src="{{ outfit.outfit_url }}" alt="{{ outfit.name }}" style="width: 100%; max-width: 500px; border-radius: 5px;">
+    
+    <div style="margin-top: 20px;">
+        <p><strong>Occasion:</strong> {{ outfit.occasion }}</p>
+        <p><strong>Created:</strong> {{ outfit.date_created }}</p>
+        <p><strong>Owner:</strong> {{ outfit.user.username }}</p>
+        
+        {% if outfit.notes %}
+        <p><strong>Notes:</strong> {{ outfit.notes }}</p>
+        {% endif %}
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3>Items in this Outfit:</h3>
+            <a href="{% url 'outfititem_add' outfit.pk %}" class="btn" style="color: white; text-decoration: none; font-size: 14px; padding: 8px 20px;">+ Add Item</a>
+        </div>
+        
+        {% if outfit_items %}
+        <ul style="list-style: none; padding: 0;">
+            {% for outfit_item in outfit_items %}
+            <li style="padding: 15px; border: 1px solid #e8e8e8; margin-bottom: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <a href="{% url 'clothing_detail' outfit_item.clothing_item.pk %}" style="font-size: 16px; font-weight: 500;">
+                        {{ outfit_item.clothing_item.name }}
+                    </a>
+                    <span style="color: #888; margin-left: 10px;">({{ outfit_item.clothing_item.get_category_display }})</span>
+                </div>
+                <a href="{% url 'outfititem_delete' outfit_item.pk %}" style="color: #d9534f; font-size: 14px;">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="color: #888;">No items linked to this outfit yet. Click "Add Item" to get started!</p>
+        {% endif %}
+    </div>
+</div>
+
+<div style="margin-top: 30px; display: flex; gap: 15px;">
+    <a href="{% url 'outfit_edit' outfit.pk %}" class="btn" style="color: white; text-decoration: none;">Edit Outfit</a>
+    <a href="{% url 'outfit_delete' outfit.pk %}" class="btn" style="background: #d9534f; color: white; text-decoration: none;">Delete Outfit</a>
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'outfit_list' %}" class="back-link">← Back to Outfits</a>
+</div>
+{% endblock %}
