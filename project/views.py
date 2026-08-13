@@ -4,13 +4,12 @@
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from .models import ClothingItem, Outfit, OutfitItem
-from .forms import ClothingItemForm, OutfitForm, OutfitItemForm
-from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
+from .models import ClothingItem, Outfit, OutfitItem
+from .forms import ClothingItemForm, OutfitForm, OutfitItemForm
 
 
 class HomeView(TemplateView):
