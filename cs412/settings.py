@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+import socket
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +16,7 @@ SECRET_KEY = 'django-insecure-gdckqr5d&yde9%r1kvxmwumq+q&bk)m78v_0di3=k9-w4!5u=o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'cs-webapps.bu.edu', '*']
+ALLOWED_HOSTS = ['cs-webapps.bu.edu', '*', '.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,9 +129,8 @@ STATICFILES_DIRS = [
 ]   
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL= "/media/"  
+MEDIA_URL = "/media/"  
 
-import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
@@ -143,3 +145,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+# Render deployment settings
+if 'RENDER' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600
+        )
+    }
+    DEBUG = False
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
