@@ -298,7 +298,7 @@
         <nav>
             <a href="{% url 'home' %}">Home</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'clothing_list' %}">Wardrobe</a>
+                <a href="{% url 'clothing_list' %}">Closet</a>
                 <a href="{% url 'outfit_list' %}">Outfits</a>
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                     {% csrf_token %}
